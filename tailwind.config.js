@@ -11,8 +11,17 @@ export default {
         historical: ['historical','sans-serif'],
         sabon: ['sabon','sans-serif'],
         neue: ['neue','snas-serif'],
-        monste: ['Montserrat','sans-serif']
+        monste: ['Montserrat','sans-serif'],
+        roboto: ['Roboto','sans-serif'],
+        inter: ['Inter','sans-serif'],
+        raleway: ['Raleway','sans-serif'],
+        outfit: ['Outfit','sans-serif'],
+        host:['Host Grotesk','sans-serif']
+      },
+      screens:{
+        '375':'375px'
       }
+      
     },
   },
   plugins: [],
