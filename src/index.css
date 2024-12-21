@@ -13,9 +13,6 @@
 @tailwind components;
 @tailwind utilities;
 
-body{
-  background-color: #000000;
-}
 
 :root {
   --step--2: clamp(2.0833rem, 1.4723rem + 3.0551vw, 3.84rem);
@@ -45,4 +42,10 @@ body{
 @font-face{
   font-family: neue;
   src: url('/assets/fonts/NHaasGroteskDSPro-55Rg.otf');
+}
+.box-shadow-gray{
+  box-shadow: 0px 5px 2px rgb(175, 175, 175);
+}
+.box-shadow-black{
+  box-shadow: 0px 5px 2px #000000;
 }
