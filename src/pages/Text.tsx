@@ -1,4 +1,4 @@
-import { SyntheticEvent, useContext, useState } from "react"
+import { SyntheticEvent, useContext} from "react"
 import { Player } from "../components/MusicPlayer"
 import { Navbar } from "../components/Navbar"
 import { TextContext } from "../context/textContext"
