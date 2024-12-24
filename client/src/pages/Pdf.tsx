@@ -1,9 +1,10 @@
-import { useContext, useEffect, useState } from "react";
+import { useContext, useState } from "react";
 import { Document, Page } from "react-pdf";
 import { FileContext } from "../context/fileContext";
 import { pdfjs } from 'react-pdf';
 import 'react-pdf/dist/esm/Page/TextLayer.css'
 import 'react-pdf/dist/esm/Page/AnnotationLayer.css'
+import { Navbar } from "../components/Navbar-pdf";
 
 pdfjs.GlobalWorkerOptions.workerSrc = new URL(
     'pdfjs-dist/build/pdf.worker.min.mjs',
@@ -11,7 +12,7 @@ pdfjs.GlobalWorkerOptions.workerSrc = new URL(
   ).toString();
 
 export function Pdf(){
-    const [numPages, setNumPages] = useState<number>()
+    const [numPages, setNumPages] = useState<number>(0)
     const [pageNumber,setPageNumber] = useState<number>(1)
     let numArray: number[] = []
     const {file} = useContext(FileContext)
@@ -21,13 +22,14 @@ export function Pdf(){
         if (numPages){
             for(let i = 1;i < numPages + 1;i = i+1){
                 numArray.push(i)
-                console.log("hi")
+                console.log(file)
             }
         }    
     return(
-        <div className="flex justify-center bg-[#F1F4F9] flex-col items-center">
-            <p>
-                Page number {pageNumber} of {numPages}
+        <section>
+            <Navbar numPages = {numPages} pageNumber={pageNumber}/>
+        <div className="flex justify-center bg-[#F1F4F9]  flex-col items-center">
+            <p className="mt-20">
             </p>
                     <Document file={file} className="" onLoadSuccess={onDocumentLoadSuccess}>
                     {numArray.map((pageNumber) => {
@@ -36,5 +38,6 @@ export function Pdf(){
                     })}
             </Document>
         </div>
+        </section>
     )
 }

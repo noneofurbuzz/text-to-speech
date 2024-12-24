@@ -1,6 +1,6 @@
 import { SyntheticEvent, useContext} from "react"
 import { Player } from "../components/MusicPlayer"
-import { Navbar } from "../components/Navbar"
+import { Navbar } from "../components/Navbar-text"
 import { TextContext } from "../context/textContext"
 
 export function Text(){
