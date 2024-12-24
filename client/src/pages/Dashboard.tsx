@@ -1,13 +1,11 @@
 import { useContext } from "react";
-import { Link, useNavigate } from "react-router-dom";
+import { Link} from "react-router-dom";
 import { OpenFormContext } from "../context/openFormContext";
 
 export function Dashboard(){
-    //const navigate = useNavigate()
     const {setOpenForm} = useContext(OpenFormContext)
 
     function handleClick(){
-        //navigate('/pdf')
         setOpenForm(true)
     }
     return(
