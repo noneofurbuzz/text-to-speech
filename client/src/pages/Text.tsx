@@ -15,7 +15,7 @@ export function Text(){
         <section className="bg-[#F1F4F9] flex justify-center ">
         <Navbar />
             <form className="mt-12 h-screen w-[55rem] font-sabon">
-                <textarea onChange={handleChange} value={value.text} name="text" className="h-full pt-16 px-12 outline-none resize-none w-full text-xl"  placeholder="Type or Paste Text"></textarea>
+                <textarea onChange={handleChange} value={value.text} name="text" className="h-full shadow-2xl pt-16 px-12 outline-none resize-none w-full text-xl"  placeholder="Type or Paste Text"></textarea>
             </form>
             <Player />
         </section>
