@@ -1,6 +1,7 @@
 import { useContext } from "react";
 import { Link} from "react-router-dom";
 import { OpenFormContext } from "../context/openFormContext";
+import { AudioLinesIcon } from "../components/AudioLines";
 
 export function Dashboard(){
     const {setOpenForm} = useContext(OpenFormContext)
@@ -10,6 +11,9 @@ export function Dashboard(){
     }
     return(
         <section className="font-outfit flex md:px-24 xl:px-0 bg-white fixed left-0 right-0  flex-col justify-center text-center items-center min-h-screen">
+            <div className="w-20 h-20 relative bg-[#f7f6f0] after:w-[70px] after:h-20 after:720:h-[88px] after:720:w-[75px] after:absolute after:bottom-2 after:bg-[#d7d7d7] after:-z-10 after:rounded-3xl after:box-shadow-gray rounded-3xl 720:w-[88px] 720:h-[88px] flex justify-center mb-8 items-center">
+            <AudioLinesIcon />
+            </div>
             <h1 className="header-dashboard  leading-none tracking-tight font-bold max-w-[400px] md:max-w-[700px]">Text to Speech Converter</h1>
             <p className="mt-5 text-xl leading-normal text-[#747474] max-w-[300px] 375:max-w-[370px] md:max-w-[450px] xl:max-w-[640px] w-[28.5rem]">Transform any written text into natural speech with a single click.</p>
             <div className="flex mt-9 flex-wrap gap-3 font-medium">
