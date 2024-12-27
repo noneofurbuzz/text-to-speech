@@ -4,7 +4,7 @@ import { Text } from "./pages/Text"
 import { Uploadpdf } from "./components/UploadPdf"
 import { useContext } from "react"
 import { OpenFormContext } from "./context/openFormContext"
-import { Pdf } from "./context/Pdf"
+import { Pdf } from "./pages/Pdf"
 
 function App() {
   const {openForm} = useContext(OpenFormContext)
