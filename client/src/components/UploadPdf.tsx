@@ -18,7 +18,12 @@ export function Uploadpdf(){
         setFile((event.target as HTMLInputElement).files?.[0])
         mutation.mutate(file)
         setOpenForm(false)
-        navigate('/pdf')
+        if ((event.target as HTMLInputElement).files?.[0].name.endsWith('.txt')){
+            navigate('/text')
+        }
+        else{
+            navigate('/pdf')
+        }
         }
     }
     return(
