@@ -61,8 +61,8 @@ export function Pdf(){
                     })}
                     
             </Document> 
-        </div> : <div className="mx-5  pt-20 font-outfit flex justify-center xl:justify-center xl:gap-44 971:gap-14 890:justify-evenly gap-14 890:gap-28 890:flex-row flex-col items-center min-h-screen"><img className="w-96 890:w-80 max-w-full" src="/assets/images/test (1).svg"/><div><p className="font-semibold text-3xl 890:text-6xl 890:mt-14 890:mb-8 text-center 890:text-left">No PDF file specified</p>
-        <p className="text-center 890:text-left text-[#c6c6c6] 360:px-0 px-2 mt-3 mb-6 w-80 890:w-[27rem] 890:mb-8 max-w-full 890:text-xl text-lg">Documents do not persist on browser refresh! Please upload a new document</p>
+        </div> : <div className="mx-5  pt-20 font-outfit flex justify-center xl:justify-center xl:gap-44 890:justify-evenly gap-14 890:flex-row flex-col items-center min-h-screen"><img className="w-96 890:w-80 max-w-full" src="/assets/images/no-data.svg"/><div><p className="font-semibold text-3xl 890:text-6xl 890:mt-14 890:mb-6 text-center 890:text-left">No file specified</p>
+        <p className="text-center 890:text-left text-[#898888] 360:px-0 px-2 mt-3 mb-6 w-80 890:w-[27rem] 890:mb-6 max-w-full 890:text-xl text-lg">Documents do not persist on browser refresh! Please upload a new document</p>
         <button onClick={()=> setOpenForm(true)} className="flex mx-auto 890:mx-0 gap-3 bg-[#615DF6] 890:text-lg py-3 px-5 mb-7 890:mb-0 text-white rounded-full"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className="lucide lucide-upload"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="17 8 12 3 7 8"/><line x1="12" x2="12" y1="3" y2="15"/></svg><span>Upload Document</span></button></div></div>}
         {loading && <div className=" min-h-screen flex justify-center items-center">
             <Loader />

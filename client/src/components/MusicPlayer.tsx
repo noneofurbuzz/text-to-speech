@@ -29,7 +29,7 @@ export function Player(){
     return(
         <>
         <ToastContainer position="top-center" autoClose = {2000} hideProgressBar = {true} limit={1}/>
-        <button onClick={playVoice} className="bg-black fixed bottom-8 items-center w-48 max-w-full flex justify-center py-4 rounded-full">
+        <button onClick={playVoice} className="bg-[#615DF6] fixed bottom-8 items-center w-48 max-w-full flex justify-center py-4 rounded-full">
             {!pause ? <svg xmlns="http://www.w3.org/2000/svg" width="22" height="22" viewBox="0 0 24 24" fill="#ffffff" stroke="#ffffff" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><polygon points="6 3 20 12 6 21 6 3"/></svg> : <svg xmlns="http://www.w3.org/2000/svg" width="22" height="22" viewBox="0 0 24 24" fill="#ffffff" stroke="#ffffff" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><rect x="14" y="4" width="4" height="16" rx="1"/><rect x="6" y="4" width="4" height="16" rx="1"/></svg>}
             <span className="text-white ml-3 font-outfit">{pause ? 'Pause' : 'Play'}</span>
         </button>
