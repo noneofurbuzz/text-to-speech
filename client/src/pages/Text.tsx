@@ -33,9 +33,9 @@ export function Text(){
         }
     }
     return(
-        <section className="bg-[#F1F4F9] flex justify-center ">
+        <section className={`bg-[#F1F4F9] flex justify-center `}>
         <Navbar />
-            <form className="mt-12 h-screen w-[55rem] font-sabon">
+            <form className={` h-screen w-[55rem] font-sabon ${file ? 'mt-24' : 'mt-12'}`}>
                 <textarea onChange={handleChange} onKeyDown={preventTyping} value={value.text} name="text" className="h-full shadow-2xl pt-16 px-12 outline-none resize-none w-full text-xl"  placeholder="Type or Paste Text"></textarea>
             </form>
             <Player />
