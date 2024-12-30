@@ -1,4 +1,4 @@
-import { SyntheticEvent, useContext} from "react"
+import { SyntheticEvent, useContext, useEffect} from "react"
 import { Player } from "../components/MusicPlayer"
 import { Navbar } from "../components/Navbar-text"
 import { TextContext } from "../context/textContext"
@@ -8,12 +8,20 @@ export function Text(){
     const {value,setValue} = useContext(TextContext)
     const {file} = useContext(FileContext)
      function handleChange(event: SyntheticEvent){
+        localStorage.setItem('text',(event.target as HTMLTextAreaElement).value)
         setValue({
             ...value,
             [(event.target as HTMLTextAreaElement).name]:(event.target as HTMLTextAreaElement).value
         })
-        console.log('change event')
     }
+    
+    useEffect(() => {
+        if (localStorage.getItem('text') !== null){
+        setValue({
+            text: localStorage.getItem('text')!
+        })}
+    },[])
+
     const reader = new FileReader()
     reader.addEventListener('load',() => {
         if(typeof reader.result === 'string' ){
