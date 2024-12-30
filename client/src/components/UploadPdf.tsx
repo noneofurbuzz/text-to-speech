@@ -5,7 +5,7 @@ import { api } from "../api/api"
 import { FileContext } from "../context/fileContext"
 import { useNavigate } from "react-router-dom"
 
-export function Uploadpdf(){
+export function Uploadpdf({notify} : {notify : (message: string) => void}){
     const {setOpenForm} = useContext(OpenFormContext)
     const {file,setFile} = useContext(FileContext)
     const [dragEnter,setDragEnter] = useState(false)
@@ -15,30 +15,43 @@ export function Uploadpdf(){
     })
     function handleChange(event: SyntheticEvent){
         if((event.target as HTMLInputElement).files){
-        setFile((event.target as HTMLInputElement).files?.[0])
-        mutation.mutate(file)
-        setOpenForm(false)
         if ((event.target as HTMLInputElement).files?.[0].name.endsWith('.txt')){
+            setFile((event.target as HTMLInputElement).files?.[0])
+            setOpenForm(false)
             navigate('/text')
         }
-        else{
+        else if ((event.target as HTMLInputElement).files?.[0].name.endsWith('.pdf')){
+            setFile((event.target as HTMLInputElement).files?.[0])
+            setOpenForm(false)
             navigate('/pdf')
+        }
+        else{
+            notify("Only PDF or TXT files allowed ...")
         }
         }
     }
     function handleDrop(event:React.DragEvent<HTMLLabelElement>){
         event.preventDefault()
         const droppedFiles = event.dataTransfer?.files
+        console.log(droppedFiles)
         if (droppedFiles)
         if (droppedFiles?.length === 1){
-            setFile(droppedFiles[0])
-            setOpenForm(false)
             if (droppedFiles[0].name.endsWith('.txt')){
+                setFile(droppedFiles[0])
+                setOpenForm(false)
                 navigate('/text')
             }
-            else{
+            else if (droppedFiles[0].name.endsWith('.pdf')){
+                setFile(droppedFiles[0])
+                setOpenForm(false)
                 navigate('/pdf')
             }
+            else{
+                notify("Only PDF or TXT files allowed ...")
+            }
+            }
+            else{
+                notify("Only 1 file at a time can be uploaded ...")
             }
         }
         
@@ -59,6 +72,5 @@ export function Uploadpdf(){
             <input type="file" id="upload" name="upload"  className="" accept=".pdf,.txt,.doc,.docx" onChange={handleChange} hidden />
         </form>
         </section>
-        
     )
 }

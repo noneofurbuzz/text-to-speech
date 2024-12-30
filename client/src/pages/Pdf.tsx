@@ -1,12 +1,11 @@
 import { useContext, useEffect, useState } from "react";
-import { Document, Page, PageProps } from "react-pdf";
+import { Document, Page } from "react-pdf";
 import { FileContext } from "../context/fileContext";
 import { pdfjs } from 'react-pdf';
 import 'react-pdf/dist/esm/Page/TextLayer.css'
 import 'react-pdf/dist/esm/Page/AnnotationLayer.css'
 import { Navbar } from "../components/Navbar-pdf";
 import { PageCallback } from "react-pdf/src/shared/types.js";
-import { OnPageLoadSuccess } from "react-pdf/dist/cjs/shared/types.js";
 import { OpenFormContext } from "../context/openFormContext";
 import { Loader } from "../components/Loader";
 
