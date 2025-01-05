@@ -1,5 +1,5 @@
 import { SyntheticEvent, useContext, useEffect} from "react"
-import { Player } from "../components/MusicPlayer"
+import { Player } from "../components/AudioPlayer"
 import { Navbar } from "../components/Navbar-text"
 import { TextContext } from "../context/textContext"
 import { FileContext } from "../context/fileContext"
