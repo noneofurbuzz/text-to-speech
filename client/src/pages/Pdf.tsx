@@ -27,6 +27,11 @@ export function Pdf(){
     let pdfString = ""
     let pdfStringArray: (number|(string|undefined)[])[][] = []
      const [windowWidth,setWindowWidth] = useState<number>(window.innerWidth)
+     useEffect(() => {
+        setValue({
+            text: ""
+        })
+     },[])
     let numArray: number[] = []
     function handleResize() {
         setWindowWidth(window.innerWidth)
@@ -73,6 +78,7 @@ export function Pdf(){
         pdfStringArray.map((stringArray) =>{
             pdfString = pdfString + stringArray.join("")
         })
+        pdfString = pdfString.replaceAll(",,"," ")
         setValue({
             text: pdfString
         })

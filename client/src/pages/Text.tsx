@@ -20,6 +20,11 @@ export function Text(){
         setValue({
             text: localStorage.getItem('text')!
         })}
+        else{
+            setValue({
+                text: ""
+            })
+        }
     },[])
 
     const reader = new FileReader()

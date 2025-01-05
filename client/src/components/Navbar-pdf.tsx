@@ -1,4 +1,4 @@
-import { useContext } from "react";
+import { useContext, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 import { FileContext } from "../context/fileContext";
 import { OpenFormContext } from "../context/openFormContext";
@@ -11,6 +11,9 @@ export function Navbar({pageNumber,numPages}:{pageNumber:number,numPages:number}
         navigate('/')
         speechSynthesis.cancel()
     }
+    useEffect(() =>{
+        speechSynthesis.cancel()
+    },[])
     return(
         <>
         {openForm ? <div className='fixed w-full bg-filter z-50 h-[4.35rem] 580:h-[4.6rem]'></div> : null}
