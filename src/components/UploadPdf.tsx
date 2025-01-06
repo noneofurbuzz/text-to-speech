@@ -1,7 +1,5 @@
 import { SyntheticEvent, useContext, useState } from "react"
 import { OpenFormContext } from "../context/openFormContext"
-import { useMutation } from "@tanstack/react-query"
-import { api } from "../api/api"
 import { FileContext } from "../context/fileContext"
 import { useNavigate } from "react-router-dom"
 
@@ -10,9 +8,6 @@ export function Uploadpdf({notify} : {notify : (message: string) => void}){
     const {file,setFile} = useContext(FileContext)
     const [dragEnter,setDragEnter] = useState(false)
     const navigate = useNavigate()
-    const mutation = useMutation({
-        mutationFn : (file: File|undefined) => api(file),
-    })
     function handleChange(event: SyntheticEvent){
         if((event.target as HTMLInputElement).files){
         if ((event.target as HTMLInputElement).files?.[0].name.endsWith('.txt')){
