@@ -2,16 +2,16 @@ import { Route, Routes } from "react-router-dom"
 import { Dashboard } from "./pages/Dashboard"
 import { Text } from "./pages/Text"
 import { Uploadpdf } from "./components/UploadPdf"
-import { useContext, useEffect, useState} from "react"
+import { useContext, useState} from "react"
 import { OpenFormContext } from "./context/openFormContext"
 import { Pdf } from "./pages/Pdf"
 import { ToastContainer, toast } from "react-toastify"
-import { TextContext } from "./context/textContext"
+
 
 function App() {
   const {openForm} = useContext(OpenFormContext)
   const [loadingSpeech,setLoadingSpeech] = useState(false)
-  const {value} = useContext(TextContext)
+
   function notify(message: string){
     toast.error(message,{
         className: 'bg-[#323232] text-[#9C9C9C] 480:w-[21rem] w-11/12'

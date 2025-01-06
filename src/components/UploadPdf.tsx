@@ -5,7 +5,7 @@ import { useNavigate } from "react-router-dom"
 
 export function Uploadpdf({notify} : {notify : (message: string) => void}){
     const {setOpenForm} = useContext(OpenFormContext)
-    const {file,setFile} = useContext(FileContext)
+    const {setFile} = useContext(FileContext)
     const [dragEnter,setDragEnter] = useState(false)
     const navigate = useNavigate()
     function handleChange(event: SyntheticEvent){

@@ -9,8 +9,21 @@ export function Player({loadingSpeech,setLoadingSpeech}:{loadingSpeech:boolean,s
     const [hasLoaded,setHasLoaded] = useState(false)
     const loadingSpeechRef = useRef<boolean>(loadingSpeech)
     let text = new SpeechSynthesisUtterance(value.text)
-    
+    useEffect(() =>{
+        if (clicked){
+            loadingSpeechRef.current = false
+        setLoadingSpeech(false)
+        setHasLoaded(true)
+        playVoice()
+        }
+    },[value.text,clicked])
     function playVoice(){
+        setClicked(true)
+        if (hasLoaded === false){
+        setLoadingSpeech(true)
+        loadingSpeechRef.current = true
+        }
+        if ((loadingSpeechRef.current as boolean) === false){
         if (value.text.trim().length === 0){
             toast.error("No text to read ...",{
                 className: 'bg-[#323232] text-[#9C9C9C] 480:w-80 w-11/12'
@@ -30,7 +43,7 @@ export function Player({loadingSpeech,setLoadingSpeech}:{loadingSpeech:boolean,s
         }
         text.addEventListener("end",() => {
             setPause(false)
-        })
+        })}
     }
     return(
         <>
