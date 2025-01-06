@@ -5,13 +5,10 @@ import App from './App.tsx'
 import { BrowserRouter } from 'react-router-dom'
 import { TextProvider } from './context/textContext.tsx'
 import { OpenFormProvider } from './context/openFormContext.tsx'
-import { QueryClient, QueryClientProvider } from '@tanstack/react-query'
 import { FileProvider } from './context/fileContext.tsx'
 
-const queryClient = new QueryClient()
 createRoot(document.getElementById('root')!).render(
   <StrictMode>
-    <QueryClientProvider client={queryClient}>
     <BrowserRouter>
     <TextProvider>
       <OpenFormProvider>
@@ -21,6 +18,5 @@ createRoot(document.getElementById('root')!).render(
       </OpenFormProvider>
     </TextProvider>
     </BrowserRouter>
-    </QueryClientProvider>
   </StrictMode>,
 )
