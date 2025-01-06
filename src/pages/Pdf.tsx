@@ -5,7 +5,7 @@ import { pdfjs } from 'react-pdf';
 import 'react-pdf/dist/esm/Page/TextLayer.css'
 import 'react-pdf/dist/esm/Page/AnnotationLayer.css'
 import { Navbar } from "../components/Navbar-pdf";
-import { PageCallback } from "react-pdf/src/shared/types.js";
+//import { PageCallback } from "react-pdf/src/shared/types.js";
 import { OpenFormContext } from "../context/openFormContext";
 import { Loader } from "../components/Loader";
 import { TextContent } from "pdfjs-dist/types/src/display/api";
@@ -20,11 +20,11 @@ pdfjs.GlobalWorkerOptions.workerSrc = new URL(
 export function Pdf({loadingSpeech,setLoadingSpeech}:{loadingSpeech:boolean,setLoadingSpeech:Dispatch<SetStateAction<boolean>>}){
     const [numPages, setNumPages] = useState<number>(0)
     const {setOpenForm} = useContext(OpenFormContext)
-    const [pageNumber,setPageNumber] = useState<number>(1)
+    const [pageNumber] = useState<number>(1)
     const [loading,setLoading] = useState(true)
-    const [pageHeight,setPageHeight] = useState(0)
+    //const [pageHeight,setPageHeight] = useState(0)
     let pdfString = ""
-    const {value,setValue} = useContext(TextContext)
+    const {setValue} = useContext(TextContext)
     let pdfStringArray: (number|(string|undefined)[])[][] = []
      const [windowWidth,setWindowWidth] = useState<number>(window.innerWidth)
     let numArray: number[] = []
@@ -41,9 +41,9 @@ export function Pdf({loadingSpeech,setLoadingSpeech}:{loadingSpeech:boolean,setL
         setNumPages(numPages) 
         setLoading(false)
     }
-    function onPageLoadSuccess(page:PageCallback){
+    /*function onPageLoadSuccess(page:PageCallback){
         setPageHeight(page.height)
-    }
+    }*/
         if (numPages){
             for(let i = 1;i < numPages + 1;i = i+1){
                 numArray.push(i)
@@ -92,7 +92,7 @@ export function Pdf({loadingSpeech,setLoadingSpeech}:{loadingSpeech:boolean,setL
                     {numArray.map((pageNumber,index) => {
                         return(
                             <>
-                <Page pageNumber={pageNumber} onRenderSuccess={onPageLoadSuccess} renderTextLayer={true} onGetTextSuccess={(text) => getText(text,pageNumber)}  key={index} className="mt-5 page shadow-2xl" loading="" width={windowWidth >= 940 ? 880 : (11/12)*windowWidth} /> 
+                <Page pageNumber={pageNumber} /*onRenderSuccess={onPageLoadSuccess}*/ renderTextLayer={true} onGetTextSuccess={(text) => getText(text,pageNumber)}  key={index} className="mt-5 page shadow-2xl" loading="" width={windowWidth >= 940 ? 880 : (11/12)*windowWidth} /> 
                 </>)
                     })}
                     
