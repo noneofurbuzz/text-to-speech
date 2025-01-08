@@ -1,16 +1,21 @@
 import { useContext, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 import { FileContext } from "../context/fileContext";
+import { TextContext } from "../context/textContext";
 
 export function Navbar(){
     const navigate = useNavigate()
     const {file} = useContext(FileContext)
+    const {setValue} = useContext(TextContext)
     function handleClick(){
         navigate('/')
         speechSynthesis.cancel()
     }
     useEffect(() =>{
         speechSynthesis.cancel()
+        setValue({
+            text:""
+        })
         
     },[])
     return(

@@ -3,17 +3,27 @@ import { useNavigate} from "react-router-dom";
 import { OpenFormContext } from "../context/openFormContext";
 import { AudioLinesIcon } from "../components/AudioLines";
 import { FileContext } from "../context/fileContext";
+import { TextContext } from "../context/textContext";
 
 export function Dashboard(){
     const {setOpenForm} = useContext(OpenFormContext)
     const {setFile} = useContext(FileContext)
+    const {setValue} = useContext(TextContext)
     const navigate = useNavigate()
     function handleClick(){
         setOpenForm(true)
+        setValue({
+            text:""
+        })
+
+
     }
     function handleTextClick(){
         setFile(undefined)
         navigate('/text')
+        setValue({
+            text:""
+        })
     }
     return(
         <section className="font-outfit flex md:px-24 xl:px-0 bg-white fixed left-0 right-0  flex-col justify-center text-center items-center min-h-screen">

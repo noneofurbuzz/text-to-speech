@@ -1,29 +1,27 @@
-import { Dispatch, SetStateAction, useContext, useEffect, useRef, useState } from "react"
+import { Dispatch, SetStateAction,useContext, useEffect, useRef, useState } from "react"
 import { TextContext } from "../context/textContext"
 import { ToastContainer, toast } from "react-toastify"
+
 
 export function Player({loadingSpeech,setLoadingSpeech}:{loadingSpeech:boolean,setLoadingSpeech:Dispatch<SetStateAction<boolean>>}){
     const {value} = useContext(TextContext)
     const [pause,setPause] = useState(false)
     const [clicked,setClicked] = useState(false)
-    const [hasLoaded,setHasLoaded] = useState(false)
-    const loadingSpeechRef = useRef<boolean>(loadingSpeech)
     let text = new SpeechSynthesisUtterance(value.text)
-    useEffect(() =>{
-        if (clicked){
-            loadingSpeechRef.current = false
-        setLoadingSpeech(false)
-        setHasLoaded(true)
-        playVoice()
-        }
-    },[value.text,clicked])
+    const textRef = useRef(value.text)
+    useEffect(()=> {
+        textRef.current = value.text
+        clicked ? playVoice(): null
+        console.log(value.text)
+    },[value.text])
     function playVoice(){
         setClicked(true)
-        if (hasLoaded === false){
-        setLoadingSpeech(true)
-        loadingSpeechRef.current = true
-        }
-        if ((loadingSpeechRef.current as boolean) === false){
+        console.log('ho')
+        if (value.text.length === 0){
+            setLoadingSpeech(true)
+        } 
+        else{
+            setLoadingSpeech(false)
         if (value.text.trim().length === 0){
             toast.error("No text to read ...",{
                 className: 'bg-[#323232] text-[#9C9C9C] 480:w-80 w-11/12'
@@ -32,6 +30,8 @@ export function Player({loadingSpeech,setLoadingSpeech}:{loadingSpeech:boolean,s
         }
         if (!speechSynthesis.speaking){
             console.log(speechSynthesis.getVoices())
+            text.lang = 'en-US'
+            text.voice = speechSynthesis.getVoices()[0]
         speechSynthesis.speak(text)
         }
         setPause(prev => !prev)
@@ -42,9 +42,9 @@ export function Player({loadingSpeech,setLoadingSpeech}:{loadingSpeech:boolean,s
             speechSynthesis.resume()
         }
         text.addEventListener("end",() => {
-            setPause(false)
-        })}
-    }
+          setPause(false)
+        })}}
+    
     return(
         <>
         <button onClick={playVoice} className="bg-[#615DF6] z-50  fixed bottom-8 items-center w-48 max-w-full flex justify-center py-4 rounded-full">

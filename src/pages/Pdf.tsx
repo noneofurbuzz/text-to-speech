@@ -1,4 +1,4 @@
-import { Dispatch, SetStateAction, useContext, useEffect, useState } from "react";
+import { Dispatch, SetStateAction, useContext, useEffect, useRef, useState } from "react";
 import { Document, Page } from "react-pdf";
 import { FileContext } from "../context/fileContext";
 import { pdfjs } from 'react-pdf';
@@ -19,6 +19,7 @@ pdfjs.GlobalWorkerOptions.workerSrc = new URL(
 
 export function Pdf({loadingSpeech,setLoadingSpeech}:{loadingSpeech:boolean,setLoadingSpeech:Dispatch<SetStateAction<boolean>>}){
     const [numPages, setNumPages] = useState<number>(0)
+    const lastPageRef = useRef(false)
     const {setOpenForm} = useContext(OpenFormContext)
     const [pageNumber] = useState<number>(1)
     const [loading,setLoading] = useState(true)
@@ -41,26 +42,22 @@ export function Pdf({loadingSpeech,setLoadingSpeech}:{loadingSpeech:boolean,setL
         setNumPages(numPages) 
         setLoading(false)
     }
-    /*function onPageLoadSuccess(page:PageCallback){
-        setPageHeight(page.height)
-    }*/
+    function onPageLoadSuccess(){
+        console.log('loaded successfully')
+    }
         if (numPages){
             for(let i = 1;i < numPages + 1;i = i+1){
                 numArray.push(i)
             }
         }   
-    function getText(text:TextContent,pageNumber:number){
-        for (let i = 1;i< numPages + 1;i=i + 1){
-        if (pageNumber === i){
-        let filteredItems = text.items.map((string) => {
+    async function getText(text:TextContent,pageNumber:number){
+        let filteredItems = await text.items.map((string) => {
             if ('str' in string){
                 return string.str
             }
         })
-        pdfStringArray.push([pageNumber,filteredItems])
-    }
-    }
-    if (pdfStringArray.length === numPages){
+        await pdfStringArray.push([pageNumber,filteredItems])
+   if (pdfStringArray.length === numPages){
     pdfStringArray.sort(function(a,b){
         if (typeof a[0] === 'number' && typeof b[0] === 'number'){
         return a[0]-b[0]
@@ -78,10 +75,7 @@ export function Pdf({loadingSpeech,setLoadingSpeech}:{loadingSpeech:boolean,setL
     setValue({
         text: pdfString
     })
-    }
-
-    }
-    
+}}
     return(
         <section>
             <Navbar numPages = {numPages} pageNumber={pageNumber}/>
@@ -92,7 +86,7 @@ export function Pdf({loadingSpeech,setLoadingSpeech}:{loadingSpeech:boolean,setL
                     {numArray.map((pageNumber,index) => {
                         return(
                             <>
-                <Page pageNumber={pageNumber} /*onRenderSuccess={onPageLoadSuccess}*/ renderTextLayer={true} onGetTextSuccess={(text) => getText(text,pageNumber)}  key={index} className="mt-5 page shadow-2xl" loading="" width={windowWidth >= 940 ? 880 : (11/12)*windowWidth} /> 
+                <Page pageNumber={pageNumber} onRenderSuccess={onPageLoadSuccess}  renderTextLayer={true} onGetTextSuccess={(text) => getText(text,pageNumber)} onGetTextError={(error) => alert('Error while loading text layer items! ' + error.message)} key={index} className="mt-5 page shadow-2xl" loading="" width={windowWidth >= 940 ? 880 : (11/12)*windowWidth} /> 
                 </>)
                     })}
                     
