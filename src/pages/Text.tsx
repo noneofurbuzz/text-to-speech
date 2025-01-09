@@ -52,7 +52,7 @@ export function Text({loadingSpeech,setLoadingSpeech}:{loadingSpeech:boolean,set
         <section className={`bg-[#F1F4F9] flex justify-center `}>
         <Navbar />
             <form className={` h-screen w-[55rem] font-sabon ${file ? 'mt-24' : 'mt-12'}`}>
-                <textarea onChange={handleChange} onKeyDown={preventTyping} value={value.text} name="text" className="h-full shadow-2xl pt-16 px-12 outline-none resize-none w-full text-xl"  placeholder="Type or Paste Text"></textarea>
+                <textarea onChange={handleChange} onKeyDown={preventTyping} value={value.text} name="text" className={`h-full shadow-2xl pt-16 px-12 outline-none resize-none w-full text-xl ${file ? 'caret-transparent': ''}`}  placeholder="Type or Paste Text"></textarea>
             </form>
             <Player loadingSpeech ={loadingSpeech} setLoadingSpeech = {setLoadingSpeech}/>
             {(loading && file ) && <div className="w-[55rem] fixed z-50 h-screen flex justify-center items-center">
