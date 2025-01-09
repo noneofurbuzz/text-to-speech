@@ -1,4 +1,4 @@
-import { Dispatch, SetStateAction, useContext, useEffect, useRef, useState } from "react";
+import { Dispatch, SetStateAction, useContext, useEffect, useState } from "react";
 import { Document, Page } from "react-pdf";
 import { FileContext } from "../context/fileContext";
 import { pdfjs } from 'react-pdf';
@@ -19,7 +19,6 @@ pdfjs.GlobalWorkerOptions.workerSrc = new URL(
 
 export function Pdf({loadingSpeech,setLoadingSpeech}:{loadingSpeech:boolean,setLoadingSpeech:Dispatch<SetStateAction<boolean>>}){
     const [numPages, setNumPages] = useState<number>(0)
-    const lastPageRef = useRef(false)
     const {setOpenForm} = useContext(OpenFormContext)
     const [pageNumber] = useState<number>(1)
     const [loading,setLoading] = useState(true)
@@ -50,13 +49,13 @@ export function Pdf({loadingSpeech,setLoadingSpeech}:{loadingSpeech:boolean,setL
                 numArray.push(i)
             }
         }   
-    async function getText(text:TextContent,pageNumber:number){
-        let filteredItems = await text.items.map((string) => {
+  async function getText(text:TextContent,pageNumber:number){
+        let filteredItems = text.items.map((string) => {
             if ('str' in string){
                 return string.str
             }
         })
-        await pdfStringArray.push([pageNumber,filteredItems])
+         await pdfStringArray.push([pageNumber,filteredItems])
    if (pdfStringArray.length === numPages){
     pdfStringArray.sort(function(a,b){
         if (typeof a[0] === 'number' && typeof b[0] === 'number'){
@@ -75,7 +74,8 @@ export function Pdf({loadingSpeech,setLoadingSpeech}:{loadingSpeech:boolean,setL
     setValue({
         text: pdfString
     })
-}}
+}
+}
     return(
         <section>
             <Navbar numPages = {numPages} pageNumber={pageNumber}/>

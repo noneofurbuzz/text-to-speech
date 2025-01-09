@@ -1,4 +1,4 @@
-import { Dispatch, SetStateAction,useContext, useEffect, useRef, useState } from "react"
+import { Dispatch, SetStateAction,useContext, useEffect, useState } from "react"
 import { TextContext } from "../context/textContext"
 import { ToastContainer, toast } from "react-toastify"
 
@@ -8,17 +8,16 @@ export function Player({loadingSpeech,setLoadingSpeech}:{loadingSpeech:boolean,s
     const [pause,setPause] = useState(false)
     const [clicked,setClicked] = useState(false)
     let text = new SpeechSynthesisUtterance(value.text)
-    const textRef = useRef(value.text)
     useEffect(()=> {
-        textRef.current = value.text
-        clicked ? playVoice(): null
-        console.log(value.text)
+        if (clicked){
+            playVoice()
+        }
     },[value.text])
-    function playVoice(){
+     function playVoice(){
         setClicked(true)
-        console.log('ho')
         if (value.text.length === 0){
             setLoadingSpeech(true)
+            return
         } 
         else{
             setLoadingSpeech(false)
