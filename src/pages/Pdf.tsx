@@ -103,7 +103,7 @@ export function Pdf({loadingSpeech,setLoadingSpeech}:{loadingSpeech:boolean,setL
 }
     return(
         <section>
-            <Navbar numPages = {numPages} pageNumber={pageNumber}/>
+            <Navbar numPages = {numPages} pageNumber={pageNumber} setLoadingSpeech = {setLoadingSpeech}/>
         {file ? <div className="flex justify-center bg-[#F1F4F9] flex-col items-center">
             {!loading && <p className="mt-20">
             </p>}

@@ -1,16 +1,17 @@
-import { useContext, useEffect } from "react";
+import { Dispatch, SetStateAction, useContext, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 import { FileContext } from "../context/fileContext";
 import { OpenFormContext } from "../context/openFormContext";
 import { TextContext } from "../context/textContext";
 
-export function Navbar({pageNumber,numPages}:{pageNumber:string|null,numPages:number}){
+export function Navbar({pageNumber,numPages,setLoadingSpeech}:{pageNumber:string|null,numPages:number,setLoadingSpeech:Dispatch<SetStateAction<boolean>>}){
     const navigate = useNavigate()
     const {openForm} = useContext(OpenFormContext)
     const {setValue} = useContext(TextContext)
     const {file} = useContext(FileContext)
     function handleClick(){
         navigate('/')
+        setLoadingSpeech(false)
         speechSynthesis.cancel()
     }
     useEffect(() =>{
