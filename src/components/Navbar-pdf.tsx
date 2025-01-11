@@ -4,7 +4,7 @@ import { FileContext } from "../context/fileContext";
 import { OpenFormContext } from "../context/openFormContext";
 import { TextContext } from "../context/textContext";
 
-export function Navbar({pageNumber,numPages}:{pageNumber:number,numPages:number}){
+export function Navbar({pageNumber,numPages}:{pageNumber:string|null,numPages:number}){
     const navigate = useNavigate()
     const {openForm} = useContext(OpenFormContext)
     const {setValue} = useContext(TextContext)

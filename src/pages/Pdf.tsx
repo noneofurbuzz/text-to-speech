@@ -20,9 +20,9 @@ pdfjs.GlobalWorkerOptions.workerSrc = new URL(
 export function Pdf({loadingSpeech,setLoadingSpeech}:{loadingSpeech:boolean,setLoadingSpeech:Dispatch<SetStateAction<boolean>>}){
     const [numPages, setNumPages] = useState<number>(0)
     const {setOpenForm} = useContext(OpenFormContext)
-    const [pageNumber] = useState<number>(1)
+    const [pageLoadSuccess,setPageLoadSucess] = useState(false)
+    const [pageNumber,setPageNumber] = useState<string>("1")
     const [loading,setLoading] = useState(true)
-    //const [pageHeight,setPageHeight] = useState(0)
     let pdfString = ""
     const {setValue} = useContext(TextContext)
     let pdfStringArray: (number|(string|undefined)[])[][] = []
@@ -41,21 +41,46 @@ export function Pdf({loadingSpeech,setLoadingSpeech}:{loadingSpeech:boolean,setL
         setNumPages(numPages) 
         setLoading(false)
     }
-    function onPageLoadSuccess(){
-        console.log('loaded successfully')
+    function changePageNumberonScroll(entries:IntersectionObserverEntry[]){
+        for (let i = 0;i < entries.length;i = i + 1){
+            if (entries[i].isIntersecting){
+                let number = entries[i].target.getAttribute('data-page-number')
+                if (number)
+                setPageNumber(number)
+            }
+        }
     }
+    function onPageLoadSuccess(){
+        setPageLoadSucess(true)
+    }
+    useEffect(() => {
+        if (!pageLoadSuccess) {
+            return;
+        }
+        const pages = document.querySelectorAll('.page')
+        const options = {
+            root: null,
+            rootMargin:'-50% 0px -50% 0px',
+            threshold:0
+        }
+        const observer = new IntersectionObserver(changePageNumberonScroll,options)
+        for (let i =0;i< pages.length;i=i+ 1){
+            observer.observe(pages[i])
+        }
+        return ()=> observer.disconnect()
+    },[pageLoadSuccess])
         if (numPages){
             for(let i = 1;i < numPages + 1;i = i+1){
                 numArray.push(i)
             }
         }   
-  async function getText(text:TextContent,pageNumber:number){
+  function getText(text:TextContent,pageNumber:number){
         let filteredItems = text.items.map((string) => {
             if ('str' in string){
                 return string.str
             }
         })
-         await pdfStringArray.push([pageNumber,filteredItems])
+         pdfStringArray.push([pageNumber,filteredItems])
    if (pdfStringArray.length === numPages){
     pdfStringArray.sort(function(a,b){
         if (typeof a[0] === 'number' && typeof b[0] === 'number'){
@@ -83,10 +108,10 @@ export function Pdf({loadingSpeech,setLoadingSpeech}:{loadingSpeech:boolean,setL
             {!loading && <p className="mt-20">
             </p>}
                     <Document file={file} className="940:w-[55rem] w-11/12 mb-5 " loading="" onLoadSuccess={onDocumentLoadSuccess} onLoadProgress={() => setLoading(true)}>
-                    {numArray.map((pageNumber,index) => {
+                    {numArray.map((pageNum,index) => {
                         return(
                             <>
-                <Page pageNumber={pageNumber} onRenderSuccess={onPageLoadSuccess}  renderTextLayer={true} onGetTextSuccess={(text) => getText(text,pageNumber)} onGetTextError={(error) => alert('Error while loading text layer items! ' + error.message)} key={index} className="mt-5 page shadow-2xl" loading="" width={windowWidth >= 940 ? 880 : (11/12)*windowWidth} /> 
+                <Page pageNumber={pageNum}  data-page-number={pageNum} onRenderSuccess={onPageLoadSuccess}  renderTextLayer={true} onGetTextSuccess={(text) => getText(text,pageNum)} onGetTextError={(error) => alert('Error while loading text layer items! ' + error.message)} key={index} className="mt-5 page shadow-2xl" loading="" width={windowWidth >= 940 ? 880 : (11/12)*windowWidth} /> 
                 </>)
                     })}
                     
