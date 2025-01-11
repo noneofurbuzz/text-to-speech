@@ -1,4 +1,4 @@
-import { Dispatch, SetStateAction, useContext, useEffect, useState } from "react";
+import { Dispatch, SetStateAction, useContext, useEffect, useRef, useState } from "react";
 import { Document, Page } from "react-pdf";
 import { FileContext } from "../context/fileContext";
 import { pdfjs } from 'react-pdf';
@@ -19,6 +19,7 @@ pdfjs.GlobalWorkerOptions.workerSrc = new URL(
 
 export function Pdf({loadingSpeech,setLoadingSpeech}:{loadingSpeech:boolean,setLoadingSpeech:Dispatch<SetStateAction<boolean>>}){
     const [numPages, setNumPages] = useState<number>(0)
+    const pages = useRef<(HTMLDivElement|null)[]>([])
     const {setOpenForm} = useContext(OpenFormContext)
     const [pageLoadSuccess,setPageLoadSucess] = useState(false)
     const [pageNumber,setPageNumber] = useState<string>("1")
@@ -57,15 +58,14 @@ export function Pdf({loadingSpeech,setLoadingSpeech}:{loadingSpeech:boolean,setL
         if (!pageLoadSuccess) {
             return;
         }
-        const pages = document.querySelectorAll('.page')
         const options = {
             root: null,
             rootMargin:'-50% 0px -50% 0px',
             threshold:0
         }
         const observer = new IntersectionObserver(changePageNumberonScroll,options)
-        for (let i =0;i< pages.length;i=i+ 1){
-            observer.observe(pages[i])
+        for (let i =0;i< pages.current.length;i=i+ 1){
+            observer.observe(pages.current[i]!)
         }
         return ()=> observer.disconnect()
     },[pageLoadSuccess])
@@ -111,7 +111,7 @@ export function Pdf({loadingSpeech,setLoadingSpeech}:{loadingSpeech:boolean,setL
                     {numArray.map((pageNum,index) => {
                         return(
                             <>
-                <Page pageNumber={pageNum}  data-page-number={pageNum} onRenderSuccess={onPageLoadSuccess}  renderTextLayer={true} onGetTextSuccess={(text) => getText(text,pageNum)} onGetTextError={(error) => alert('Error while loading text layer items! ' + error.message)} key={index} className="mt-5 page shadow-2xl" loading="" width={windowWidth >= 940 ? 880 : (11/12)*windowWidth} /> 
+                <Page pageNumber={pageNum} inputRef={(element) => (pages.current ? (pages.current[pageNum-1] = element): null)} data-page-number={pageNum} onRenderSuccess={onPageLoadSuccess}  renderTextLayer={true} onGetTextSuccess={(text) => getText(text,pageNum)} onGetTextError={(error) => alert('Error while loading text layer items! ' + error.message)} key={index} className="mt-5 page shadow-2xl" loading="" width={windowWidth >= 940 ? 880 : (11/12)*windowWidth} /> 
                 </>)
                     })}
                     
